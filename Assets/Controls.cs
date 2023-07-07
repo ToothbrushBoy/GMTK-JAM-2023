@@ -23,7 +23,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""Controls"",
     ""maps"": [],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Default"",
+            ""bindingGroup"": ""Default"",
+            ""devices"": []
+        }
+    ]
 }");
     }
 
@@ -81,5 +87,14 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public int FindBinding(InputBinding bindingMask, out InputAction action)
     {
         return asset.FindBinding(bindingMask, out action);
+    }
+    private int m_DefaultSchemeIndex = -1;
+    public InputControlScheme DefaultScheme
+    {
+        get
+        {
+            if (m_DefaultSchemeIndex == -1) m_DefaultSchemeIndex = asset.FindControlSchemeIndex("Default");
+            return asset.controlSchemes[m_DefaultSchemeIndex];
+        }
     }
 }
